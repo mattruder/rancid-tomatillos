@@ -3,7 +3,6 @@ import './App.css';
 import MovieCard from './MovieCard'
 import Movies from './Movies'
 import Nav from './Nav'
-import movieData from './movieData'
 import MovieDetails from "./MovieDetails"
 
 
@@ -11,38 +10,55 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      movies: movieData.movies,
+      movies: [],
       displaySingleMovie: false,
-      currentMovie: null
+      currentMovie: null,
+      error: ''
     }
     this.displayMovie = this.displayMovie.bind(this)
     this.displayHome = this.displayHome.bind(this)
   }
 
+  componentDidMount = () => {
+    fetch('https://rancid-tomatillos.herokuapp.com/api/v2/movies')
+    .then(response => response.json())
+    .then(data => this.setState({movies: data.movies}))
+    .catch(error => this.setState({error: 'There was a problem loading the page. Please try again later.'}))
+  }
+
+
   displayMovie(id) {
-    const movie = this.state.movies.find((movie) => {
-      return movie.id === id
+    fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/movies/${id}`)
+    .then(response => {
+      if (response.ok) {
+        return response.json()
+      } else {
+        throw new Error ('Something went wrong')
+      }
     })
-    this.setState({currentMovie: movie})
-    this.setState({displaySingleMovie: true})
+    .then(data => this.setState({displaySingleMovie: true, currentMovie: data.movie}))
+    .catch(error => {
+      return this.setState({error: 'There was a problem loading your movie.'})
+    }
+    )
   }
 
   displayHome() {
-    this.setState({displaySingleMovie: false})
+    this.setState({displaySingleMovie: false, error: ''})
   }
 
   render() {
-    if (this.state.displaySingleMovie === false)
-    {return (
-      <main>
-        <Nav displayHome={this.displayHome}/>
-        <Movies onClick={this.displayMovie}
-          movies={this.state.movies}
-          displayMovie={this.displayMovie}
-        />
-      </main>
+    if (!this.state.displaySingleMovie && !this.state.error){
+      return (
+        <main>
+          <Nav displayHome={this.displayHome}/>
+          <Movies onClick={this.displayMovie}
+            movies={this.state.movies}
+            displayMovie={this.displayMovie}
+          />
+        </main>
     )}
-    else {
+    else if (this.state.displaySingleMovie && !this.state.error) {
       return (
         <main>
           <Nav displayHome={this.displayHome}/>
@@ -51,9 +67,15 @@ class App extends Component {
           />
         </main>
       )
+    } else {
+      return(
+        <main>
+          <Nav displayHome={this.displayHome}/>
+          <h2 className="error-message">{this.state.error}</h2>
+        </main>
+      )
     }
   }
-
 
 }
 
