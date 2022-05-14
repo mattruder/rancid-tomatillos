@@ -1,3 +1,7 @@
 .movie-card > img {
   height: 300px;
 }
+
+/* .movie-card > h3 {
+  overflow-wrap: normal;
+} */
