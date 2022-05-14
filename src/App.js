@@ -16,6 +16,7 @@ class App extends Component {
       currentMovie: null
     }
     this.displayMovie = this.displayMovie.bind(this)
+    this.displayHome = this.displayHome.bind(this)
   }
 
   displayMovie(id) {
@@ -26,11 +27,15 @@ class App extends Component {
     this.setState({displaySingleMovie: true})
   }
 
+  displayHome() {
+    this.setState({displaySingleMovie: false})
+  }
+
   render() {
     if (this.state.displaySingleMovie === false)
     {return (
       <main>
-        <Nav />
+        <Nav displayHome={this.displayHome}/>
         <Movies onClick={this.displayMovie}
           movies={this.state.movies}
           displayMovie={this.displayMovie}
@@ -40,7 +45,7 @@ class App extends Component {
     else {
       return (
         <main>
-          <Nav />
+          <Nav displayHome={this.displayHome}/>
           <MovieDetails
           movie={this.state.currentMovie}
           />

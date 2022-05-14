@@ -1,10 +1,10 @@
 import React from 'react';
 import  './Nav.css';
 
-function Nav() {
+function Nav({displayHome}) {
   return (
     <nav>
-      <button className="home-button">Rancid Tomatillos</button>
+      <button className="home-button" onClick={displayHome}>Rancid Tomatillos</button>
     </nav>
   )
 }
