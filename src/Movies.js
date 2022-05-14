@@ -2,7 +2,7 @@ import React from 'react';
 import './Movies.css';
 import MovieCard from './MovieCard'
 
-function Movies({movies}) {
+function Movies({ movies, displayMovie }) {
   const movieCards = movies.map((movie) => {
     return (
       <MovieCard
@@ -10,7 +10,7 @@ function Movies({movies}) {
         img={movie.poster_path}
         id={movie.id}
         key={movie.id}
-
+        displayMovie={displayMovie}
       />
     )
   })
