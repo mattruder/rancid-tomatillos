@@ -4,6 +4,7 @@ import MovieCard from './MovieCard'
 import Movies from './Movies'
 import Nav from './Nav'
 import MovieDetails from "./MovieDetails"
+import { Route, NavLink, Switch } from 'react-router-dom'
 
 
 class App extends Component {
@@ -11,12 +12,8 @@ class App extends Component {
     super();
     this.state = {
       movies: [],
-      displaySingleMovie: false,
-      currentMovie: null,
       error: ''
     }
-    this.displayMovie = this.displayMovie.bind(this)
-    this.displayHome = this.displayHome.bind(this)
   }
 
   componentDidMount = () => {
@@ -26,28 +23,30 @@ class App extends Component {
     .catch(error => this.setState({error: 'There was a problem loading the page. Please try again later.'}))
   }
 
+  render() {
+    return(
+      <main>
+        <Nav/>
+        <Switch>
+          <Route
+            exact path="/"
+            render={() =>
+              <Movies movies={this.state.movies}/>
+            }
+          />
+          <Route
+            exact path="/:id"
+            render={({match}) => {
+              const id = parseInt(match.params.id)
+              return <MovieDetails id={id} />
+            }}
+          />
+        </Switch>
+      </main>
 
-  displayMovie(id) {
-    fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/movies/${id}`)
-    .then(response => {
-      if (response.ok) {
-        return response.json()
-      } else {
-        throw new Error ('Something went wrong')
-      }
-    })
-    .then(data => this.setState({displaySingleMovie: true, currentMovie: data.movie}))
-    .catch(error => {
-      return this.setState({error: 'There was a problem loading your movie.'})
-    }
     )
   }
-
-  displayHome() {
-    this.setState({displaySingleMovie: false, error: ''})
-  }
-
-  render() {
+    /*
     if (!this.state.displaySingleMovie && !this.state.error){
       return (
         <main>
@@ -74,9 +73,12 @@ class App extends Component {
           <h2 className="error-message">{this.state.error}</h2>
         </main>
       )
-    }
-  }
+    }*/
+
 
 }
 
 export default App;
+
+
+//this.setState({displaySingleMovie: true, currentMovie: data.movie})
