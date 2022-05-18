@@ -35,7 +35,7 @@ class App extends Component {
             }
           />
           <Route
-            exact path="/:id"
+            exact path="/movies/:id"
             render={({match}) => {
               const id = parseInt(match.params.id)
               return <MovieDetails id={id} />
