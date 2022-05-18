@@ -1,10 +1,11 @@
 import React from 'react';
 import  './Nav.css';
+import { NavLink } from 'react-router-dom'
 
-function Nav({displayHome}) {
+function Nav() {
   return (
     <nav>
-      <button className="home-button" onClick={displayHome}>Rancid Tomatillos</button>
+      <NavLink to="/" className="home">Rancid Tomatillos</NavLink>
       <h2>Pick A Movie!</h2>
     </nav>
   )
