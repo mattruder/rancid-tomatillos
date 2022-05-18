@@ -7,16 +7,18 @@ nav {
   color: white;
 }
 
-button {
+.home {
   font-size: 30px;
   border: none;
   background-color: black;
   color: white;
   margin-left: 50px;
   font-weight: bold;
+  text-decoration: none;
+  font-family: 'Monoton', sans-serif;
 }
 
-button:hover {
+.home:hover {
   cursor: pointer;
 }
 
