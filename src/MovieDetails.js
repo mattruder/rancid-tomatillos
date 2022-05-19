@@ -40,7 +40,7 @@ class MovieDetails extends Component {
             <div className="movie-text">
                 <h1>{this.state.movie.title}</h1>
                 <h3>{this.state.movie.tagline}</h3>
-                <h3>Genres:{this.state.movie.genres.join('  ')}</h3>
+                <h3>Genres: {this.state.movie.genres.join('  ')}</h3>
                 <h3>Avg Rating: {this.state.movie.average_rating.toFixed(2)}</h3>
                 <h3>Release Date: {this.state.movie.release_date}</h3>
                 <p>Overview: {this.state.movie.overview}</p>
