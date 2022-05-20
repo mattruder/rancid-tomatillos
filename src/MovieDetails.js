@@ -34,7 +34,7 @@ class MovieDetails extends Component {
   render() {
       return (
         <>
-        { this.state.movie &&
+        {!this.state.error && this.state.movie &&
           <div className="movie-details">
           <img className="background-img" src={this.state.movie.backdrop_path}/>
             <div className="movie-text">
@@ -50,6 +50,7 @@ class MovieDetails extends Component {
             </div>
           </div>
         }
+        {this.state.error && <h2>{this.state.error}</h2>}
         </>
       )
     }
