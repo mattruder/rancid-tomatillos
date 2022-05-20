@@ -10,20 +10,14 @@ class SearchBar extends Component {
   }
 
   handleChange = (event) => {
-    this.setState({ search: event.target.value})
-  }
-
-  componentDidUpdate = () => {
-    if(this.state.search) {
-      this.props.searchMovies(this.state.search)
-    }
-    console.log('line 17', this.state.search)
-
+    this.setState({ search: event.target.value}, () => {
+       this.props.searchMovies(this.state.search)
+    })
   }
 
   clearSearch = (event) => {
-    this.props.resetSearch()
-    this.setState({ search: ''})
+    this.props.resetSearch();
+    this.setState({ search: ''});
   }
 
   render(){
@@ -31,6 +25,7 @@ class SearchBar extends Component {
       <form>
         <input
           type="text"
+          id="search"
           placeholder="Search for a movie"
           value={this.state.search}
           onChange={event => this.handleChange(event)}

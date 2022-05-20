@@ -13,14 +13,7 @@ class App extends Component {
     super();
     this.state = {
       movies: [],
-      searchResults: [ {
-          id: 694919,
-          poster_path: "https://image.tmdb.org/t/p/original//6CoRTJTmijhBLJTUNoVSUNxZMEI.jpg",
-          backdrop_path: "https://image.tmdb.org/t/p/original//pq0JSpwyT2URytdFG0euztQPAyR.jpg",
-          title: "Money Plane",
-          average_rating: 6.875,
-          release_date: "2020-09-29"
-        } ],
+      searchResults: [],
       searching: false,
       error: ''
     }
@@ -36,24 +29,22 @@ class App extends Component {
   }
 
   searchMovies = (input) => {
-    console.log('input', input)
-    // this.setState({ searching: true })
+    const filteredMovies =
+      this.state.movies.filter(movie => movie.title.toLowerCase().includes(input.toLowerCase()));
 
 
-    //then we want to to use our state.movies to get a filtered array of movies that inlcude the input passed from the search background
-
-    //then we want to this.setState.searchResults and re render our movies container using the searchResults
-
-    //if a user clicks clear then we need to reset the form, reset state of search bar to '', and rerender movies container with OG movies array state.movies
-
-    //search movies using input and maybe transform case and check what movies include the input
-    //
-    //we want this to set state so that our movies container is rerendered with the correct array of movies
+    if(filteredMovies.length) {
+      this.setState({ searching: true, searchResults: filteredMovies, error: ''});
+    } else {
+      this.setState({ error: 'No movies match your search.' })
+    }
+    console.log(this.state)
   }
 
   resetSearch = () => {
-    console.log('reseting search')
-    // this.setState({ searchResults: [], searching: false, })
+    this.setState({ searchResults: [], searching: false, error: ''})
+
+
   }
 
 
@@ -67,8 +58,9 @@ class App extends Component {
             exact path="/"
             render={() =>
               <>
-                {this.state.searching && <Movies key="search-results" movies={this.state.searchResults}/>}
-                {!this.state.searching &&  <Movies movies={this.state.movies}/>}
+                {this.state.error && <h2>{this.state.error}</h2> }
+                {!this.state.error && this.state.searching && <Movies key="search-results" movies={this.state.searchResults}/>}
+                {!this.state.error && !this.state.searching &&  <Movies key="all-movies" movies={this.state.movies}/>}
               </>
             }
           />
