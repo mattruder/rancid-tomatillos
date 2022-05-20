@@ -1,12 +1,13 @@
 import React from 'react';
 import  './Nav.css';
 import { NavLink } from 'react-router-dom'
+import SearchBar from './searchBar'
 
-function Nav() {
+function Nav({searchMovies, resetSearch}) {
   return (
     <nav>
       <NavLink to="/" className="home">Rancid Tomatillos</NavLink>
-      <h2>Pick A Movie!</h2>
+      <SearchBar searchMovies={searchMovies} resetSearch={resetSearch}/>
     </nav>
   )
 }
