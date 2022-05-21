@@ -54,11 +54,6 @@ describe('rancid-tomatillos movie display app', () => {
     cy.get('nav').contains('Rancid Tomatillos')
   })
 
-  // Replace this with Search when we add that feature!
-
-  it('User should see Pick A Movie in the navbar', () => {
-    cy.get('nav').contains('Pick A Movie!')
-  })
 
   it('User should see 5 movie previews at the homepage', () => {
     cy.get('.movie-container').contains('Money Plane')
@@ -94,6 +89,13 @@ describe('rancid-tomatillos movie display app', () => {
     cy.get('div #694919').click()
     .url().should('include', '/movies/694919')
     .get('.movie-text').contains("Genres: Action")
+    .get('.movie-text').contains("Money Plane")
+    .get('.movie-text').contains("Avg Rating: 6.88")
+    .get('.movie-text').contains("Overview: A professional thief with $40 million in debt and his family's life on the line must commit one final heist - rob a futuristic airborne casino filled with the world's most dangerous criminals.")
+    .get('.movie-text').contains("Budget: $0")
+    .get('.movie-text').contains("Revenue: $0")
+    .get('.movie-text').contains("Runtime: 82 minutes")
+    .get('.background-img').should('have.attr', 'src').should('include','https://image.tmdb.org/t/p/original//pq0JSpwyT2URytdFG0euztQPAyR.jpg')
   })
 
   it('Should be able to return home after displaying movie details', () => {
@@ -122,6 +124,23 @@ describe('rancid-tomatillos movie display app', () => {
     cy.visit('http://localhost:3000/movies/694919')
     cy.get('.home').click()
     .url().should('eq', 'http://localhost:3000/')
+  })
+
+  it('User should be able to search from the searchbar', () => {
+    cy.get('nav > .searchBar > input').type('Mu')
+    cy.get('.movie-container').contains("Mulan")
+    cy.get('.movie-container').should('not.have.value', "Ava")
+    cy.get('nav > .searchBar > .clear-search').click()
+    cy.get('.movie-container').contains("Ava")
+  })
+
+  it('User should be shown error message if no movies match search', () => {
+    cy.get('nav > .searchBar > input').type('Mux')
+    cy.get('.error-message').contains("No movies match your search.")
+    cy.get('nav > .searchBar > input').type('{backspace}')
+    cy.get('.movie-container').contains("Mulan")
+    cy.get('nav > .searchBar > .clear-search').click()
+    cy.get('.movie-container').contains("Ava")
   })
 
 

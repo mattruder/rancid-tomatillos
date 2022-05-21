@@ -13,11 +13,25 @@
   height: 375px;
   margin-left: 20px;
   margin-right: 20px;
-  cursor: pointer;
 }
 
 .movie-card > h3 {
   overflow-wrap: normal;
+  color: white;
+  text-decoration: none;
+}
+
+a, a:focus, a:active {
+      text-decoration: none;
+      color: inherit;
+ }
+
+a:hover {
+  color: green;
+}
+
+h3:hover {
+  color: lightgrey;
 }
 
 /* .movie-card > h3 {

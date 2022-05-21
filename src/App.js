@@ -58,7 +58,7 @@ class App extends Component {
             exact path="/"
             render={() =>
               <>
-                {this.state.error && <h2>{this.state.error}</h2> }
+                {this.state.error && <h2 className="error-message">{this.state.error}</h2> }
                 {!this.state.error && this.state.searching && <Movies key="search-results" movies={this.state.searchResults}/>}
                 {!this.state.error && !this.state.searching &&  <Movies key="all-movies" movies={this.state.movies}/>}
               </>
