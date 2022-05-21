@@ -22,7 +22,7 @@ class SearchBar extends Component {
 
   render(){
     return(
-      <form>
+      <form className='searchBar'>
         <input
           type="text"
           id="search"
